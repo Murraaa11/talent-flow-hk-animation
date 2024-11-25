@@ -47,14 +47,14 @@ legend {
 
 .flow-map .locations-g {
   fill: none;
-  stroke: #928F8F;
+  stroke: #CDCFD2;
   stroke-linejoin: round;
   stroke-linecap: round;
 }
 
 .flow-map .fills-g {
   fill: #b3cddc;
-  stroke: #928F8F;
+  stroke: #CDCFD2;
   stroke-linejoin: round;
   stroke-linecap: round;
 }
