@@ -59,7 +59,7 @@ legend {
   stroke-linecap: round;
 }
 
-.flow-map .label-text {
+.flow-map .label-text { 
   /* font-size: 0.675rem; */
   font-size: 0.8rem;
   font-weight: bold;
