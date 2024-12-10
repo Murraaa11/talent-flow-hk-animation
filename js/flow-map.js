@@ -617,6 +617,12 @@ class FlowMap {
                 .attr("class", "label-text")
                 .style("fill", "black");
             }
+
+            g.attr("transform", (d) => `translate(${d.x},${d.y})`)
+              .attr("opacity", 0) // 初始为透明
+              .transition()
+              .duration(1500)
+              .attr("opacity", 1); // 过渡到不透明
           });
         },
       );
