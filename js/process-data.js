@@ -293,7 +293,7 @@ function processData(csv, country, chinese) {
   const outbounds = d3.group(links, (d) => d.source);
 
   const original_nodes = country.objects.countries.geometries.map((d) => {
-    const name = d.properties.name;
+    const name = d.properties.name === "China" ? "Mainland China" : d.properties.name;
     const id = d.id;
     const chinese_name = d.properties.chinese_name;
     return {

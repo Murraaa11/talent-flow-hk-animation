@@ -147,6 +147,9 @@ class FlowMap {
         case 'MAC':
           d.x += 0; d.y += 15;
           break;
+        case 'FRA':
+          d.x += 10; d.y += -12;
+          break;
       }
     });
 
@@ -194,7 +197,18 @@ class FlowMap {
       this.locationById.get(d.target)
     );
 
-    this.labels = sources.concat(targets);
+    //delete duplicated label
+    const seen = new Set();
+    this.labels = sources.concat(targets)
+      .map(label => ({...label, selected: label.id === this.location ? true : false}))
+      .filter(label => {
+          if (seen.has(label.id)) {
+              return false; // 如果 id 已存在，过滤掉
+          } else {
+              seen.add(label.id); // 否则，添加到 Set
+              return true; // 保留当前对象
+          }
+      });
 
     console.log("labels: ", this.labels);
 
@@ -210,15 +224,19 @@ class FlowMap {
     console.log("merged fill: ", this.merged_fill);
     console.log("merged: ", this.merged);
 
-    this.render();
+    this.define();
   }
 
-  render() {
+  define() {
     this.defineInboundGradients();
     this.defineOutboundGradients();
     this.defineFlows();
     this.defineLabels();
     this.defineValues();
+    this.render();
+  }
+
+  render() {
     this.renderLocations();
     this.renderFills();
     this.renderFlowFlows();
@@ -439,7 +457,7 @@ class FlowMap {
 
         const pathElement = g.select(`#flow-animation-path-${d.id}`);
         const pathLength = pathElement.node().getTotalLength();
-        console.log("pathLength: ", pathLength);
+        // console.log("pathLength: ", pathLength);
 
         pathElement
             .attr("stroke-dasharray", pathLength) // 设置为路径的总长度
@@ -451,7 +469,7 @@ class FlowMap {
 
         const arrowElement = g.select(`#flow-arrow-path-${d.id}`);
         const arrowLength = arrowElement.node().getTotalLength();
-        console.log("arrowLength: ", arrowLength);
+        // console.log("arrowLength: ", arrowLength);
 
         arrowElement
             .attr("marker-end", null) // 临时移除箭头头部
@@ -470,58 +488,141 @@ class FlowMap {
 
 
 
+  // defineLabels() {
+  //   //console.log(this.labels);
+  //   this.defs
+  //     .select(".labels-defs")
+  //     .selectAll("g")
+  //     .data(this.labels, (d) => d.id)
+  //     .join((enter) =>
+  //       enter
+  //         .append("g")
+  //         .attr("id", (d) => `label-${d.id}`)
+  //         .call((g) =>
+  //           g
+  //             .append("text")
+  //             .attr("class", (d) => {
+  //               if (d.selected){
+  //                 console.log(`label-${d.feature.properties.name}: ${d.selected}`);
+  //                 return "label-specialtext label-specialtext--halo";
+  //               } else {
+  //                 return "label-text label-text--halo";
+  //               }
+  //             })
+  //             .attr("text-anchor", "middle")
+  //             .attr("dy", "0.32em")
+  //             .text((d) => d.feature.properties.name === 'China' ? 'Mainland China' : d.feature.properties.name)
+  //         )
+  //         .call((g) =>
+  //           g
+  //             .append("text")
+  //             .attr("class", (d) => {
+  //               if (d.selected){
+  //                 console.log(`label-${d.feature.properties.name}: ${d.selected}`);
+  //                 return "label-specialtext";
+  //               } else {
+  //                 return "label-text";
+  //               }
+  //             })
+  //             .attr("text-anchor", "middle")
+  //             .attr("dy", "0.32em")
+  //             .style("fill", (d) => {
+  //               if (d.selected) {
+  //                 console.log(`label-${d.feature.properties.name}: ${d.selected}`);
+  //                 return "#a61629";
+  //               } else {
+  //                 return "black";
+  //               }
+  //             })
+  //             .text((d) => d.feature.properties.name === 'China' ? 'Mainland China' : d.feature.properties.name)
+  //         )
+  //     )
+      // .attr("transform", (d) => `translate(${d.x},${d.y})`)
+      // .attr("opacity", 0) // 初始为透明
+      // .transition()
+      // .duration(1500)
+      // .attr("opacity", 1); // 过渡到不透明
+  // }
+
+
+  
   defineLabels() {
-    //console.log(this.labels);
     this.defs
       .select(".labels-defs")
       .selectAll("g")
       .data(this.labels, (d) => d.id)
-      .join((enter) =>
-        enter
-          .append("g")
-          .attr("id", (d) => `label-${d.id}`)
-          .call((g) =>
-            g
-              .append("text")
-              .attr("class", (d) => {
-                if (d.id === this.location){
-                  return "label-specialtext label-specialtext--halo";
-                } else {
-                  return "label-text label-text--halo";
-                }
-              })
-              .attr("text-anchor", "middle")
-              .attr("dy", "0.32em")
-              .text((d) => d.feature.properties.name === 'China' ? 'Mainland China' : d.feature.properties.name)
-          )
-          .call((g) =>
-            g
-              .append("text")
-              .attr("class", (d) => {
-                if (d.id === this.location){
-                  return "label-specialtext";
-                } else {
-                  return "label-text";
-                }
-              })
-              .attr("text-anchor", "middle")
-              .attr("dy", "0.32em")
-              .style("fill", (d) => {
-                if (d.id === this.location) {
-                  return "#a61629";
-                } else {
-                  return "black";
-                }
-              })
-              .text((d) => d.feature.properties.name === 'China' ? 'Mainland China' : d.feature.properties.name)
-          )
-      )
-      .attr("transform", (d) => `translate(${d.x},${d.y})`)
-      .attr("opacity", 0) // 初始为透明
-      .transition()
-      .duration(1500)
-      .attr("opacity", 1); // 过渡到不透明
-  }
+      .join(
+        (enter) => {
+          // 处理进入的新元素
+          const g = enter.append("g")
+            .attr("id", (d) => `label-${d.id}`);
+
+          // 添加文本元素
+          g.append("text")
+            .attr("id", "text1")
+            .attr("class", (d) => {
+              if (d.selected) {
+                return "label-specialtext label-specialtext--halo";
+              } else {
+                return "label-text label-text--halo";
+              }
+            })
+            .attr("text-anchor", "middle")
+            .attr("dy", "0.32em")
+            .text((d) => d.feature.properties.name === 'China' ? 'Mainland China' : d.feature.properties.name);
+
+          g.append("text")
+            .attr("id", "text2")
+            .attr("class", (d) => {
+              if (d.selected) {
+                return "label-specialtext";
+              } else {
+                return "label-text";
+              }
+            })
+            .attr("text-anchor", "middle")
+            .attr("dy", "0.32em")
+            .style("fill", (d) => {
+              if (d.selected) {
+                return "#a61629";
+              } else {
+                return "black";
+              }
+            })
+            .text((d) => d.feature.properties.name === 'China' ? 'Mainland China' : d.feature.properties.name);
+
+          g.attr("transform", (d) => `translate(${d.x},${d.y})`)
+            .attr("opacity", 0) // 初始为透明
+            .transition()
+            .duration(1500)
+            .attr("opacity", 1); // 过渡到不透明
+
+          return g;
+        },
+        (update) => {
+          // 处理更新的元素
+          update.each((d, i, nodes) => {
+            const g = d3.select(nodes[i]); // 获取当前元素的选择集
+            // 根据条件处理
+            if (d.selected) {
+                g.select("#text1")
+                  .attr("class", "label-specialtext label-specialtext--halo");
+                g.select("#text2")
+                  .attr("class", "label-specialtext")
+                  .style("fill", "#a61629");
+            } else {
+              g.select("#text1")
+                .attr("class", "label-text label-text--halo");
+              g.select("#text2")
+                .attr("class", "label-text")
+                .style("fill", "black");
+            }
+          });
+        },
+      );
+}
+
+
 
   defineValues(){
     this.defs
