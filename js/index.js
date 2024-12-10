@@ -1,5 +1,5 @@
 Promise.all([
-  d3.csv("data/GBA&SBA_flow_data.csv"),
+  d3.csv("data/HK_flow_total.csv"),
   d3.json("data/worldmap_topojson_simplified.json"),
   d3.json("data/countries-10m.json"),
   d3.csv("data/country_chinese_name.csv"),
@@ -31,7 +31,7 @@ Promise.all([
   );
 
   const selected = {
-    location: "999",
+    location: "344",
     direction: "both",
     display: "top10",
   };
@@ -85,18 +85,18 @@ Promise.all([
     color: color_in,
     x,
     flowValues: [100, 200, 500, 1000], //可能要改
-    tickValues: ["Inbound", ""],
+    tickValues: ["Outbound", "Inbound"],
     direction: "inbound",
   });
 
-  new FlowLegend({
-    container: d3.select("#flow-legend-outbound"),
-    color: color_out,
-    x,
-    flowValues: [100, 200, 500, 1000], //可能要改
-    tickValues: ["Outbound", ""],
-    direction: "outbound",
-  });
+  // new FlowLegend({
+  //   container: d3.select("#flow-legend-outbound"),
+  //   color: color_out,
+  //   x,
+  //   flowValues: [100, 200, 500, 1000], //可能要改
+  //   tickValues: ["Outbound", ""],
+  //   direction: "outbound",
+  // });
 
   const flowMap = new FlowMap({
     container: d3.select("#flow-map"),

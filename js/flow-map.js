@@ -484,9 +484,7 @@ class FlowMap {
             g
               .append("text")
               .attr("class", (d) => {
-                if (d.feature.properties.chinese_name === "粤港澳大湾区" 
-                  || d.feature.properties.chinese_name === "旧金山湾区" 
-                  || d.feature.properties.chinese_name === "香港"){
+                if (d.id === this.location){
                   return "label-specialtext label-specialtext--halo";
                 } else {
                   return "label-text label-text--halo";
@@ -500,9 +498,7 @@ class FlowMap {
             g
               .append("text")
               .attr("class", (d) => {
-                if (d.feature.properties.chinese_name === "粤港澳大湾区" 
-                  || d.feature.properties.chinese_name === "旧金山湾区" 
-                  || d.feature.properties.chinese_name === "香港"){
+                if (d.id === this.location){
                   return "label-specialtext";
                 } else {
                   return "label-text";
@@ -511,9 +507,7 @@ class FlowMap {
               .attr("text-anchor", "middle")
               .attr("dy", "0.32em")
               .style("fill", (d) => {
-                if (d.feature.properties.chinese_name === "粤港澳大湾区" 
-                  || d.feature.properties.chinese_name === "旧金山湾区" 
-                  || d.feature.properties.chinese_name === "香港") {
+                if (d.id === this.location) {
                   return "#a61629";
                 } else {
                   return "black";
