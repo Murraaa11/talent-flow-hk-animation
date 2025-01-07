@@ -132,9 +132,9 @@ class FlowMap {
         case 'GBA':
           d.x += 30; d.y += 40;
           break;
-        // case 'CHN':
-        //   d.x += 60; d.y += -40;
-        //   break;
+        case 'CHN':
+          d.x += 0; d.y += 10;
+          break;
         case 'IND':
           d.x += -15; d.y += -10;
           break;

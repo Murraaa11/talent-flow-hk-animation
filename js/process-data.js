@@ -282,11 +282,17 @@ function processData(csv, country, chinese) {
   
   const links = []; //array of object storing Source (id), Target (id) and Value (int)
   csv.forEach((d) => {
-    links.push({
-      source: idByName[d.source_ISO],
-      target: idByName[d.target_ISO],
-      value: +d.value,
-    });
+    const sourceId = idByName[d.source_ISO];
+    const targetId = idByName[d.target_ISO];
+
+    // 检查 sourceId 和 targetId 是否都存在
+    if (sourceId !== undefined && targetId !== undefined) {
+        links.push({
+            source: sourceId,
+            target: targetId,
+            value: +d.value,
+        });
+    }
   });
 
   const inbounds = d3.group(links, (d) => d.target);
