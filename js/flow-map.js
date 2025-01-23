@@ -210,8 +210,6 @@ class FlowMap {
           }
       });
 
-    console.log("labels: ", this.labels);
-
 
     this.merged_fill = this.labels.map((d) =>
       Object.assign(

@@ -11,7 +11,6 @@ function processData(csv, country, chinese) {
   '020': 'AND',
   '024': 'AGO',
   '660': 'AIA',
-  '010': 'ATA',
   '028': 'ATG',
   '032': 'ARG',
   '051': 'ARM',
@@ -30,10 +29,8 @@ function processData(csv, country, chinese) {
   '060': 'BMU',
   '064': 'BTN',
   '068': 'BOL',
-  '535': 'BES',
   '070': 'BIH',
   '072': 'BWA',
-  '074': 'BVT',
   '076': 'BRA',
   '086': 'IOT',
   '096': 'BRN',
@@ -49,8 +46,6 @@ function processData(csv, country, chinese) {
   '148': 'TCD',
   '152': 'CHL',
   '156': 'CHN',
-  '162': 'CXR',
-  '166': 'CCK',
   '170': 'COL',
   '174': 'COM',
   '178': 'COG',
@@ -80,7 +75,6 @@ function processData(csv, country, chinese) {
   '242': 'FJI',
   '246': 'FIN',
   '250': 'FRA',
-  '254': 'GUF',
   '258': 'PYF',
   '260': 'ATF',
   '266': 'GAB',
@@ -92,7 +86,6 @@ function processData(csv, country, chinese) {
   '300': 'GRC',
   '304': 'GRL',
   '308': 'GRD',
-  '312': 'GLP',
   '316': 'GUM',
   '320': 'GTM',
   '831': 'GGY',
@@ -142,10 +135,8 @@ function processData(csv, country, chinese) {
   '466': 'MLI',
   '470': 'MLT',
   '584': 'MHL',
-  '474': 'MTQ',
   '478': 'MRT',
   '480': 'MUS',
-  '175': 'MYT',
   '484': 'MEX',
   '583': 'FSM',
   '498': 'MDA',
@@ -184,7 +175,6 @@ function processData(csv, country, chinese) {
   '620': 'PRT',
   '630': 'PRI',
   '634': 'QAT',
-  '638': 'REU',
   '642': 'ROU',
   '643': 'RUS',
   '646': 'RWA',
@@ -216,7 +206,6 @@ function processData(csv, country, chinese) {
   '144': 'LKA',
   '729': 'SDN',
   '740': 'SUR',
-  '744': 'SJM',
   '752': 'SWE',
   '756': 'CHE',
   '760': 'SYR',
@@ -226,7 +215,6 @@ function processData(csv, country, chinese) {
   '764': 'THA',
   '626': 'TLS',
   '768': 'TGO',
-  '772': 'TKL',
   '776': 'TON',
   '780': 'TTO',
   '788': 'TUN',
@@ -252,8 +240,8 @@ function processData(csv, country, chinese) {
   '887': 'YEM',
   '894': 'ZMB',
   '716': 'ZWE',
-  '999': 'GBA',
-  '998': 'SBA',
+  // '999': 'GBA',
+  // '998': 'SBA',
 }
 
 
@@ -284,6 +272,8 @@ function processData(csv, country, chinese) {
   csv.forEach((d) => {
     const sourceId = idByName[d.source_ISO];
     const targetId = idByName[d.target_ISO];
+    console.log("sourceISO: ", d.source_ISO, "sourceId: ", sourceId);
+    console.log("targetISO: ", d.target_ISO, "targetId: ", targetId);
 
     // 检查 sourceId 和 targetId 是否都存在
     if (sourceId !== undefined && targetId !== undefined) {
@@ -320,7 +310,7 @@ function processData(csv, country, chinese) {
 
   const nodes = [...original_nodes].sort((a, b) => d3.ascending(a.name, b.name));
 
-  //console.log(links);
+  // console.log(nodes);
 
   return { nodes, links };
 }
