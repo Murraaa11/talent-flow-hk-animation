@@ -272,8 +272,6 @@ function processData(csv, country, chinese) {
   csv.forEach((d) => {
     const sourceId = idByName[d.source_ISO];
     const targetId = idByName[d.target_ISO];
-    console.log("sourceISO: ", d.source_ISO, "sourceId: ", sourceId);
-    console.log("targetISO: ", d.target_ISO, "targetId: ", targetId);
 
     // 检查 sourceId 和 targetId 是否都存在
     if (sourceId !== undefined && targetId !== undefined) {
