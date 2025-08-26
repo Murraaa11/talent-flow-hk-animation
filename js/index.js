@@ -1,5 +1,5 @@
 Promise.all([
-  d3.csv("data/WORLD_flow_data_new_0123.csv"),
+  d3.csv("data/2020_2024_CounryFlow.csv"),
   d3.json("data/worldmap_topojson_simplified.json"),
   d3.json("data/countries-10m.json"),
   d3.csv("data/country_chinese_name.csv"),
