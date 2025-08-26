@@ -84,7 +84,7 @@ Promise.all([
     container: d3.select("#flow-legend-inbound"),
     color: color_in,
     x,
-    flowValues: [100, 1000, 5000, 10000], //可能要改
+    flowValues: [1000, 5000, 10000, 50000], //可能要改
     tickValues: ["Outbound", "Inbound"],
     direction: "inbound",
   });
